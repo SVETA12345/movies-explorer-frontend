@@ -1,0 +1,76 @@
+.footer{
+    background: #202020;
+    padding-bottom: 20px;
+}
+
+.footer__title{
+    margin: 0 auto;
+    max-width: 1140px;
+    padding-bottom: 20px;
+    border-bottom:  1px solid #424242;
+    padding-top: 79px;
+    color: #8B8B8B;
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.footer__container{
+    display: flex;
+    max-width: 1140px;
+    margin: 0 auto;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.footer__list_text{
+    margin: 0;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.footer__list{
+    display: flex;
+    width: 182px;
+    justify-content: space-between;
+}
+
+@media (max-width: 1024px){
+    .footer__title{
+        max-width: 668px;
+    }
+    .footer__container{
+        max-width: 668px;
+    }
+}
+
+@media (max-width: 690px){
+    .footer__title{
+        max-width: 300px;
+        font-size: 12px;
+    }
+    .footer__container{
+        flex-direction: column;
+        align-items: center;
+        max-width: 300px;
+        margin-top: 30px;
+    }
+    .footer__list{
+        flex-direction: column;
+        order: -1;
+        text-align: center;
+    }
+    .footer__list_text{
+        font-size: 12px;
+    }
+    .footer__list_text_git{
+        margin-top: 12px;
+        margin-bottom: 30px;
+    }
+}

@@ -1,0 +1,24 @@
+.movies{
+    width: 100%;
+    background-color: #202020;
+}
+.movies__line{
+    margin: 0 auto;
+    margin-top: 69px;
+    max-width: 1140px;
+    height: 1px;
+    background: #424242;
+}
+
+@media (max-width: 1024px){
+    .movies__line{
+        max-width: 708px;
+    }
+}
+
+@media (max-width: 690px){
+    .movies__line{
+        margin-top: 44px;
+        max-width: 292px;
+    }
+}

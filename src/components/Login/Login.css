@@ -1,0 +1,127 @@
+.login{
+    background: #202020;
+    min-height: 950px;
+    width: 100%;
+}
+.login__container{
+    margin: 0 auto;
+    padding-top: 70px;
+    width: 396px
+}
+
+.login__logo{
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.login__title{
+    margin: 0;
+    margin-top: 40px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.form__subtitle{
+    margin: 0;
+    margin-top: 24px;
+    color: #8B8B8B;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.form__subtitle:first-child{
+    margin-top: 40px;
+}
+
+.login__input{
+    width: 100%;
+    margin-top: 5px;
+    background: #202020;
+    border: none;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #424242;
+    color: white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.login__save{
+    margin: 0 auto;
+    margin-top: 221px;
+    background: transparent;
+    border: none;
+    display: block;
+    color: white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+    background: #4285F4;;
+    border-radius: 3px;
+}
+
+.login__signup{
+    width: 100%;
+    text-decoration: none;
+    color: #8B8B8B;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.login__signup_active{
+    color: #4285F4;
+}
+
+.login__signup:hover{
+    opacity: 0.7;
+}
+
+.login__save:hover{
+    opacity: 0.7;
+}
+
+@media (max-width: 1024px){
+    .login__container{
+        padding-top: 232px;
+    }
+}
+
+@media (max-width: 690px){
+    .login__container{
+        width: 260px;
+        padding-top: 56px;
+    }
+    .login__logo{
+        margin: 0 auto;
+        display: block;
+    }
+    .login__title{
+        margin-top: 50px;
+        text-align: center;
+    }
+    .form__subtitle:first-child{
+        margin-top: 80px;
+    }
+    .login__save{
+        margin-top: 267px;
+    }
+    .login__signup{
+        font-size: 12px;
+    }
+}
