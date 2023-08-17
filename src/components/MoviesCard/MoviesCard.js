@@ -1,8 +1,8 @@
 import './MoviesCard.css';
 import { Link } from 'react-router-dom'; 
 import image from '../../images/noimage.png'
-import saveLike from '../../images/save1-min.png'
-import like from '../../images/save1d-min.png'
+import saveLike from '../../images/save1.svg'
+import like from '../../images/save1d.svg'
 import close from '../../images/close.svg'
 import { useState } from 'react';
 function MoviesCard({card, isSaveFilm}) {

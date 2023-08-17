@@ -9,6 +9,8 @@
     gap:38px 20px;
     grid-template-columns:repeat(auto-fit, minmax(270px,1fr));
     min-height: 300px;
+    padding: 0;
+    list-style: none;
 }
 
 .places__button{
@@ -41,10 +43,11 @@
     .places__container{
         max-width: 708px;
         grid-template-columns:repeat(auto-fit, minmax(339px,1fr));
+        gap: 30px 26px;
     }
 }
 
-@media (max-width: 690px){
+@media (max-width: 425px){
     .places__container{
         max-width: 300px;
         grid-template-columns:repeat(auto-fit, minmax(300px,1fr));

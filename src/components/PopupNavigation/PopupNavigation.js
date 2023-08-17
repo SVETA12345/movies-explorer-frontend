@@ -15,7 +15,7 @@ function PopupNavigation(props) {
         <Link to='/movies' className={props.isFilms ? 'popup__link popup__link_film popup__link_active' : 'popup__link popup__link_film'}>Фильмы</Link>
         <Link to='/saved-movies' className={props.isSaveFilm ?'popup__link popup__link_save popup__link_active' : 'popup__link popup__link_save'}>Сохранённые фильмы</Link>
         <Link to='/profile' className={props.isProfile ? 'popup__link popup__link_profile popup__link_active' : 'popup__link popup__link_profile'}>
-            <p>Аккаунт</p>
+            <p className='popup__subtitle'>Аккаунт</p>
             <div className='popup__circle'>
                 <img src={icon} alt='человек' className='popup__img' />
             </div>

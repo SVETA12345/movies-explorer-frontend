@@ -17,7 +17,7 @@ function SavedMovies(props) {
         <section className="movies">
             <PopupNavigation isOpen={isOpen} setIsOpen={setIsOpen} isGlavnay={props.isGlavnay}
          isFilms={props.isFilms} isSaveFilm={props.isSaveFilm} isProfile={props.isProfile}/>
-            <Header>
+            <Header isBlue={false}>
                     <Link to='/movies' className='header__link header__link_film'>Фильмы</Link>
                     <Link to='/saved-movies' className='header__link header__link_save'>Сохранённые фильмы</Link>
                     <Link to='/profile' className='header__link header__link_profile'>

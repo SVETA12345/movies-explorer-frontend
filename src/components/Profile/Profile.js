@@ -10,8 +10,6 @@ function Profile(props) {
     const [name, setName] = useState("Виталий");
     const [email, setEmail] = useState("pochta@yandex.ru");
     const [isRed, setRed] = useState(false)
-    const { register, errors, handleSubmit } = useForm()
-    console.log(register, errors, handleSubmit)
     function handleChange(){
         setRed(true)
     }
@@ -33,7 +31,7 @@ function Profile(props) {
         <section className="profile">
             <PopupNavigation isOpen={isOpen} setIsOpen={setIsOpen} isGlavnay={props.isGlavnay}
          isFilms={props.isFilms} isSaveFilm={props.isSaveFilm} isProfile={props.isProfile}/>
-            <Header>
+            <Header isBlue={false}>
                     <Link to='/movies' className='header__link header__link_film'>Фильмы</Link>
                     <Link to='/saved-movies' className='header__link header__link_save'>Сохранённые фильмы</Link>
                     <Link to='/profile' className='header__link header__link_profile'>
@@ -50,7 +48,8 @@ function Profile(props) {
             <form>
             <div className='profile__container'>
                 <p className='profile__paragraph'>Имя</p>
-                <input name='profile' className='profile__input' placeholder="Имя" type='text' value={name} onChange={handleChangeName}></input>
+                <input required name='profile' minLength={2}
+        maxLength={30} className='profile__input' placeholder="Имя" type='text' value={name} onChange={handleChangeName}></input>
             </div>
             <div className='profile__container'>
                 <p className='profile__paragraph'>E-mail</p>
@@ -61,7 +60,7 @@ function Profile(props) {
             <Link to="/" className={isRed ? 'profile__disabled': 'profile__signout'}>
             Выйти из аккаунта
           </Link>
-          <span className="name-input-error form__item-error form__item-error_field_name"></span>
+          <span className="name-input-error profile__item-error profile__item-error_field_name"></span>
           <button type='submit' className={isRed ? 'profile__save': 'profile__disabled'}>Сохранить</button>
         </section>
     )

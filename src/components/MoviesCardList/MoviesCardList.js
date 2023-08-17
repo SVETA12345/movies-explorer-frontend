@@ -17,13 +17,15 @@ function MoviesCardList(props) {
         
         return (
             <section className='places'>
-            <div className="places__container">
+            <ul className="places__container">
             {cardsList.map((card) => (
+              <li>
               <MoviesCard
                 card={card} isSaveFilm={props.isSaveFilm}
               />
+              </li>
             ))}
-          </div>
+          </ul>
           {props.children}
           </section>
         )

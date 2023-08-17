@@ -40,11 +40,11 @@
 }
 
 .login__input{
+    padding:0;
     width: 100%;
-    margin-top: 5px;
     background: #202020;
     border: none;
-    padding-bottom: 10px;
+    padding-bottom: 13px;
     border-bottom: 1px solid #424242;
     color: white;
     font-size: 14px;
@@ -84,7 +84,7 @@
     margin-top: 16px;
 }
 
-.login__signup_active{
+.login__another-signup_active{
     color: #4285F4;
 }
 
@@ -102,7 +102,7 @@
     }
 }
 
-@media (max-width: 690px){
+@media (max-width: 425px){
     .login__container{
         width: 260px;
         padding-top: 56px;
@@ -119,7 +119,7 @@
         margin-top: 80px;
     }
     .login__save{
-        margin-top: 267px;
+        margin-top: 309px;
     }
     .login__signup{
         font-size: 12px;

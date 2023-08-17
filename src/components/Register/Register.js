@@ -1,5 +1,5 @@
 import './Register.css';
-import logo from '../../images/header__logo.png'
+import logo from '../../images/header__logo.svg'
 import { Link } from 'react-router-dom';
 
 function Register() {
@@ -10,20 +10,22 @@ function Register() {
                 <img src={logo} alt='logo' className='login__logo'></img>
             </Link>
                 <h1 className="login__title">Добро пожаловать!</h1>
-                <form className="form popup__form">
+                <form className="form">
                 <p className='form__subtitle'>Имя</p>
                     <input
                         placeholder="Имя"
-                        className="form__name_mesto_title login__input"
+                        className="login__input"
                         name="username"
                         required
                         id="username"
+                        minLength={2}
+                        maxLength={30}
                     />
                     <p className='form__subtitle'>E-mail</p>
                     <input
                         type="email"
                         placeholder="Email"
-                        className="form__name_mesto_title login__input"
+                        className="login__input"
                         name="username"
                         required
                         id="username"
@@ -33,21 +35,23 @@ function Register() {
                     <input
                         type="password"
                         placeholder="Пароль"
-                        className="form__name_mesto_src login__input"
+                        className="login__input"
                         name="password"
                         id="password"
                         required
+                        minLength={2}
+                        maxLength={40}
                     />
                     <span className="mesto-name-error form__item-error form__item-error_field_name"></span>
                     <button
-                        className="login__save login__save_register popup__button"
+                        className="login__save login__save_register"
                         type="submit"
                     >
                         Зарегистрироваться
                     </button>
                 </form>
                 <Link to="/signin" className="login__signup">
-                Уже зарегистрированы? <span className='login__signup_active'>Войти</span>
+                Уже зарегистрированы? <span className='login__another-signup login__another-signup_active'>Войти</span>
                 </Link>
             </div>
         </div>

@@ -19,11 +19,9 @@ function Main(props) {
     }
   return (
     <>
-      <main className='main'>
-      <PopupNavigation isOpen={isOpen} setIsOpen={setIsOpen} isGlavnay={props.isGlavnay}
+    <PopupNavigation isOpen={isOpen} setIsOpen={setIsOpen} isGlavnay={props.isGlavnay}
          isFilms={props.isFilms} isSaveFilm={props.isSaveFilm} isProfile={props.isProfile}/>
-        <div className='main__container'>
-      <Header>
+         <Header isBlue={true}>
         {props.loggedIn ? (
             <>
             <Link to='/movies' className='header__link header__link_film'>Фильмы</Link>
@@ -42,10 +40,14 @@ function Main(props) {
         )}
 
         </Header>
-      <h1 className='main__profile_title'>
+      <main className='main'>
+      
+        <div className='main__profile'>
+      
+      <h1 className='main__another-profile main__another-profile_title'>
         Учебный проект студента факультета Веб-разработки.
       </h1>
-      <img className='main__profile_img' src={ring} alt='ring'></img>
+      <img className='main__another-profile main__another-profile_img' src={ring} alt='ring'></img>
       </div>
       <AboutProject />
       <Techs />

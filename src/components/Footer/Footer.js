@@ -4,13 +4,21 @@ function Footer() {
       <footer className="footer">
         <div className='footer__title'>Учебный проект Яндекс.Практикум х BeatFilm.</div>
         <div className='footer__container'>
-            <p className="footer__list_text">
-                © {new Date().getFullYear()} Mesto Russia
+            <p className="footer__list-container footer__list-container_text">
+                © {new Date().getFullYear()}
             </p>
-            <div className='footer__list'>
-                <p className='footer__list_text'>Яндекс.Практикум</p>
-                <p className='footer__list_text footer__list_text_git'>Github</p>
-            </div>
+            <ul className='footer__another-list'>
+              <li>
+            <a href='https://practicum.yandex.ru/' className='footer__second-list footer__second-list_link' target="_blank" rel="noopener noreferrer">
+                <p className='footer__list footer__list_text'>Яндекс.Практикум</p>
+                </a>
+                </li>
+                <li>
+                <a href='https://github.com/SVETA12345/' className='footer__three-list footer__three-list_link' target="_blank" rel="noopener noreferrer">
+                <p className='footer__list footer__list_text_git'>Github</p>
+                </a>
+                </li>
+            </ul>
 
         </div>
       </footer>

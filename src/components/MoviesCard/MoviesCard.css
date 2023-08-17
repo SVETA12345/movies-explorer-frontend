@@ -64,9 +64,7 @@
 .place__like:hover{
     opacity: 0.7;
 }
-.place__like_active{
-    background-image: url(../../images/save1-min.png);
-}
+
 
 @media (max-width: 1024px){
     .place{
@@ -81,7 +79,7 @@
     }
 }
 
-@media (max-width: 690px){
+@media (max-width: 425px){
     .place{
         height: 246px;
         width: 300px;

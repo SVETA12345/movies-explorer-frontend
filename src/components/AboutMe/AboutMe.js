@@ -16,19 +16,25 @@ function AboutMe() {
             </div>
             <img src={imgSveta} alt='Света' className='about-me__img'/>
         </div>
-        <h5 className='about-me__subtitle_portfolio'>Портфолио</h5>
+        <h5 className='about-me__another-subtitle about-me__another-subtitle_portfolio'>Портфолио</h5>
         <ul className='about-me__list'>
             <li className='about-me__site'>
-                <a href='https://sveta12345.github.io/how-to-learn/' target="_blank" rel="noopener noreferrer"  className='about-me__site_title'>Статичный сайт</a>
-                <img className='about-me__strelka' alt='strelka' src={strelka} />            
+                <a href='https://sveta12345.github.io/how-to-learn/' className='about-me__link' target="_blank" rel="noopener noreferrer">
+                    <p className='about-me__another-site about-me__another-site_title'>Статичный сайт</p>
+                <img className='about-me__strelka' alt='strelka' src={strelka} /> 
+                </a>           
             </li>
             <li className='about-me__site'>
-                <a href='https://sveta12345.github.io/russian-travel/' rel="noopener noreferrer" target="_blank" className='about-me__site_title'>Адаптивный сайт</a>
-                <img className='about-me__strelka' alt='strelka' src={strelka} />            
+                <a href='https://sveta12345.github.io/russian-travel/' className='about-me__link' target="_blank" rel="noopener noreferrer">
+                    <p className='about-me__another-site about-me__another-site_title'>Адаптивный сайт</p>
+                <img className='about-me__strelka' alt='strelka' src={strelka} /> 
+                </a>           
             </li>
             <li className='about-me__site'>
-                <a href='https://sveta12345.github.io/mesto/' rel="noopener noreferrer" target="_blank" className='about-me__site_title'>Одностраничное приложение</a>
-                <img className='about-me__strelka' alt='strelka' src={strelka} />            
+                <a href='https://sveta12345.github.io/mesto/' className='about-me__link' target="_blank" rel="noopener noreferrer">
+                    <p className='about-me__another-site about-me__another-site_title'>Одностраничное приложение</p>
+                <img className='about-me__strelka' alt='strelka' src={strelka} /> 
+                </a>           
             </li>
         </ul>
       </section>

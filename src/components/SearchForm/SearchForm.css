@@ -97,7 +97,7 @@
 @media (max-width: 1024px){
     .search{
         max-width: 708px;
-        margin-top: 80px;
+        margin-top: 75px;
     }
     .search__form{
         width: calc(100% - 290px);
@@ -110,14 +110,14 @@
     }
 }
 
-@media (max-width: 690px){
+@media (max-width: 425px){
     .search{
         background: #202020;
         flex-direction: column;
         justify-content: center;
         max-width: 300px;
         height: auto;
-        margin-top: 80px;
+        margin-top: 77px;
     }
     .search__logo{
         display: none;
@@ -147,7 +147,7 @@
         display: none;
     }
     .search__container{
-        margin-top: 45px;
+        margin-top: 35px;
     }
     .search__button{
         margin-left: 0;
