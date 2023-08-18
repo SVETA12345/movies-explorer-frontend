@@ -2,7 +2,7 @@ import './Login.css';
 import logo from '../../images/header__logo.svg'
 import { Link } from 'react-router-dom';
 
-function Login() {
+function Login(props) {
     return (
         <div className="login">
             <div className='login__container'>

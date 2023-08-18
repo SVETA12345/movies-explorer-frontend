@@ -2,7 +2,8 @@ import './Register.css';
 import logo from '../../images/header__logo.svg'
 import { Link } from 'react-router-dom';
 
-function Register() {
+function Register(props) {
+
     return (
         <div className="login">
             <div className='login__container'>

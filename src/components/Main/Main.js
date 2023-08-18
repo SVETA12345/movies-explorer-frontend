@@ -43,7 +43,6 @@ function Main(props) {
       <main className='main'>
       
         <div className='main__profile'>
-      
       <h1 className='main__another-profile main__another-profile_title'>
         Учебный проект студента факультета Веб-разработки.
       </h1>

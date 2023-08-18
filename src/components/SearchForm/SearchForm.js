@@ -13,6 +13,7 @@ function SearchForm(props) {
                     placeholder="Фильм"
                     type="text"
                     className="input"
+                    required
                 />
                 <button className="form__button" type='submit'>
                     Найти

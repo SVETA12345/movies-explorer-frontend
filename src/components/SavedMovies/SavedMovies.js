@@ -30,11 +30,13 @@ function SavedMovies(props) {
                     </button>
                
             </Header>
+            <main>
             <SearchForm isKorot={props.isKorot} handleKorot={props.handleKorot}/>
             <div className='movies__line'></div>
             <MoviesCardList isDisabled={props.isDisabled} cards={props.cards} width={props.width} indexCard={props.indexCard}
              handleClickMoreCard={props.handleClickMoreCard} isKorot={props.isKorot} isSaveFilm={true}>
              </MoviesCardList>
+             </main>
         <Footer />
         </section>
         

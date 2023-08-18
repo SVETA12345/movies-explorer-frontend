@@ -33,8 +33,8 @@ function App() {
     setCards([{ duration: 102, image: 'https://avatars.mds.yandex.net/i?id=5799ccf48d3e25ef52c3cb3cac1a957e-5560397-images-thumbs&n=13', nameRU: '33 слова о дизайне' },
     { duration: 60, image: 'https://avatars.mds.yandex.net/i?id=267b2fa5326ad6b5bd61d73f0b1e46106ac0e562-9181148-images-thumbs&n=13', nameRU: 'Киноальманах «100 лет дизайна»' },
     { duration: 50, image: 'https://m.media-amazon.com/images/M/MV5BMTljZDZhYTYtYmY3NS00NDZkLThkMjItYWZkODhkZjFmOGE5XkEyXkFqcGdeQXVyMTI0MjI2NDcz._V1_.jpg', nameRU: 'В погоне за Бенкси' },
-    { duration: 102, image: 'https://avatars.mds.yandex.net/i?id=dbc65baf496ca1c6e6b35866b707ff77020c1013-8339391-images-thumbs&n=13', nameRU: 'Баския: Взрыв реальности' },
-    { duration: 102, image: 'https://avatars.mds.yandex.net/i?id=d125ec34e65fb78b27a5e909496b19b1ec7672bf-9263927-images-thumbs&n=13', nameRU: 'Бег это свобода' },
+    { duration: 50, image: 'https://avatars.mds.yandex.net/i?id=dbc65baf496ca1c6e6b35866b707ff77020c1013-8339391-images-thumbs&n=13', nameRU: 'Баския: Взрыв реальности' },
+    { duration: 50, image: 'https://avatars.mds.yandex.net/i?id=d125ec34e65fb78b27a5e909496b19b1ec7672bf-9263927-images-thumbs&n=13', nameRU: 'Бег это свобода' },
     { duration: 102, image: 'https://avatars.mds.yandex.net/i?id=1ded3d12b1187ca8b5e59321b534ab171d312544-8000733-images-thumbs&n=13', nameRU: 'Книготорговцы' },
     { duration: 102, image: 'https://avatars.mds.yandex.net/i?id=2a00000189db87c2f0ecaad0ef2ed015cee0-1244236-fast-images&n=13', nameRU: 'Когда я думаю о Германии ночью' },
     { duration: 102, image: '', nameRU: 'Gimme Danger: История Игги и The Stooges' },
@@ -99,25 +99,27 @@ function App() {
   }
   return (
     <div className="App">
+      <div className='page'>
       <Routes>
         <Route path="/" element={<Main loggedIn={loggedIn} handleActiveGlavnay={handleActiveGlavnay} isGlavnay={isGlavnay}
           isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} />} />
-        <Route path="/movies" element={<Movies handleActiveFilms={handleActiveFilms} isGlavnay={isGlavnay}
+        <Route path="/movies" element={<Movies  handleActiveFilms={handleActiveFilms} isGlavnay={isGlavnay}
           isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={cards} width={width}
           indexCard={indexCard} handleClickMoreCard={handleClickMoreCard} isDisabled={isDisabled}
           handleKorot={handleKorot} isKorot={isKorot}
         />} />
-        <Route path="/saved-movies" element={<SavedMovies handleActiveSaveFilm={handleActiveSaveFilm} isGlavnay={isGlavnay}
+        <Route path="/saved-movies" element={<SavedMovies  handleActiveSaveFilm={handleActiveSaveFilm} isGlavnay={isGlavnay}
           isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={saveCards} width={width}
           indexCard={indexCard} handleClickMoreCard={handleClickMoreCard} isDisabled={isDisabled}
           handleKorot={handleKorot} isKorot={isKorot}
         />} />
-        <Route path="/profile" element={<Profile loggedIn={loggedIn} handleActiveProfile={handleActiveProfile} isGlavnay={isGlavnay}
+        <Route path="/profile" element={<Profile  loggedIn={loggedIn} handleActiveProfile={handleActiveProfile} isGlavnay={isGlavnay}
           isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} />} />
-        <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
-        <Route path="/error" element={<ServerError />} />
+        <Route path="/signin" element={<Login  />} />
+        <Route path="/signup" element={<Register  />} />
+        <Route path="/error" element={<ServerError  />} />
       </Routes>
+      </div>
     </div>
   );
 }
