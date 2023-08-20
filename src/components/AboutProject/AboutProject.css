@@ -1,0 +1,222 @@
+.aboutproject{
+    background: #202020;
+    padding-bottom: 110px;
+}
+
+.aboutproject__title{
+    max-width: 1140px;
+    letter-spacing: -0.88px;
+    margin:0 auto;
+    padding-top: 110px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #DADADA;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.aboutproject__container{
+    display: flex;
+    margin: 0 auto;
+    margin-top: 70px;
+    max-width: 1140px;
+    justify-content: space-between;
+    padding: 0;
+    list-style: none;
+}
+
+.aboutproject__column{
+    width: 550px;
+}
+
+.aboutproject__subtitle{
+    margin: 0;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.8px;
+}
+
+.aboutproject__paragraph{
+    margin:0;
+    margin-top: 26px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; 
+}
+
+.aboutproject__stage{
+    margin: 0 auto;
+    margin-top: 110px;
+    max-width: 1140px;
+    display: flex;
+}
+
+.another-stage_back{
+    width: 228px;
+}
+
+.aboutproject__another-stage_back-week{
+    margin: 0;
+    height: 31px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3DDC84;
+    color: black;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.aboutproject__another-stage_back_paragraph{
+    text-align:center;
+    margin-top: 14px;
+    color: #8B8B8B;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 17px;
+}
+
+.aboutproject__front{
+    width: calc(100% - 228px);
+}
+
+.aboutproject__another-front_week{
+    margin: 0;
+    background: #303030;
+    height: 31px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.aboutproject__another-front_paragraph{
+    text-align:center;
+    margin-top: 14px;
+    color: #8B8B8B;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 17px;
+}
+@media (max-width: 1024px){
+    .aboutproject{
+        padding-bottom: 78px;
+    }
+    .aboutproject__title{
+        padding-top: 90px;
+        max-width: 668px;
+    }
+    .aboutproject__container{
+        max-width: 668px;
+    }
+    .aboutproject__column{
+        width: 319px;
+    }
+    .aboutproject__paragraph{
+        margin-top: 22px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .aboutproject__stage{
+        max-width: 668px;
+        margin-top: 93px;
+    }
+    .another-stage_back{
+        width: 140px;
+    }
+    .aboutproject__another-stage_back-week{
+        height: 36px;
+    }
+    .aboutproject__front{
+        width: calc(100% - 140px);
+    }
+    .aboutproject__another-front_week{
+        height: 36px;
+    }
+}
+
+@media (max-width: 767px){
+    .aboutproject__title{
+        max-width: 420px;
+    }
+    .aboutproject__container{
+        max-width: 420px;
+    }
+    .aboutproject__column{
+        width: 100%;
+    }
+    .aboutproject__stage{
+        max-width: 420px;
+    }
+}
+@media (max-width: 425px){
+    .aboutproject{
+        padding-bottom: 70px;
+    }
+    .aboutproject__title{
+        padding-top: 70px;
+        max-width: 284px;
+        font-size: 18px;
+        padding-bottom: 28px;
+    }
+    .aboutproject__container{
+        max-width: 284px;
+        display: block;
+        margin-top:60px;
+    }
+    .aboutproject__column{
+        width: 100%;
+    }
+    .aboutproject__column:first-child{
+        margin-bottom: 56px;
+    }
+    .aboutproject__subtitle{
+        font-size: 18px;
+        letter-spacing: -0.72px;
+    }
+    .aboutproject__paragraph{
+        margin-top: 16px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+    .aboutproject__stage{
+        max-width: 284px;
+        margin-top: 60px;
+    }
+    .another-stage_back{
+        width: 100px;
+    }
+    .aboutproject__another-stage_back-week{
+        height: 35px;
+        font-size: 11px;
+    }
+    .aboutproject__front{
+        width: calc(100% - 100px);
+    }
+    .aboutproject__another-front_week{
+        height: 35px;
+        font-size: 11px;
+    }
+    .aboutproject__another-stage_back_paragraph{
+        font-size: 11px;
+        line-height: normal;
+        margin-top: 10px;
+    }
+    .aboutproject__another-front_paragraph{
+        font-size: 11px;
+        line-height: normal;
+        margin-top: 10px;
+    }
+}
