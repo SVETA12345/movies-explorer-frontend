@@ -1,15 +1,30 @@
 import './Profile.css'
 import PopupNavigation from "../PopupNavigation/PopupNavigation";
 import Header from "../Header/Header";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import icon from '../../images/profile.svg';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
 import { useForm } from 'react-hook-form'
+import { api } from "../../utils/ApiMain.js";
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+
 function Profile(props) {
+    let currentUser = useContext(CurrentUserContext);
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const [name, setName] = useState("Виталий");
-    const [email, setEmail] = useState("pochta@yandex.ru");
+    const [name, setName] = useState(currentUser.name);
+    const [email, setEmail] = useState(currentUser.email);
     const [isRed, setRed] = useState(false)
+    const isDisabled=currentUser.name === name && currentUser.email=== email
+    function signOut() {
+        api.exitPage().then((data)=>{
+          console.log('signOut',data)
+          localStorage.removeItem('token');
+          props.setLoggedIn(false)
+    
+        }).catch((err)=>{console.log(err)})
+        
+      }
     function handleChange(){
         setRed(true)
     }
@@ -22,6 +37,15 @@ function Profile(props) {
         if (isRed){
         setName(e.target.value);
         }
+      }
+    function handleSubmit(e) {
+        // Запрещаем браузеру переходить по адресу формы
+        e.preventDefault();
+        // Передаём значения управляемых компонентов во внешний обработчик
+        props.handleUpdateUser({
+          name,
+          email,
+        });
       }
     function handleOpenData() {
         setIsOpen(true);
@@ -44,7 +68,8 @@ function Profile(props) {
                     </button>
                
             </Header>
-            <h1 className='profile__title'>Привет, Виталий!</h1>
+            <main>
+            <h1 className='profile__title'>Привет, {currentUser.name}!</h1>
             <form>
             <div className='profile__container'>
                 <p className='profile__paragraph'>Имя</p>
@@ -57,11 +82,12 @@ function Profile(props) {
             </div>
             </form>
             <button className={isRed ? 'profile__disabled': 'profile__edit'} type='button' onClick={handleChange}>Редактировать</button>
-            <Link to="/" className={isRed ? 'profile__disabled': 'profile__signout'}>
+            <Link onClick={signOut} to="/" className={isRed ? 'profile__disabled': 'profile__signout'}>
             Выйти из аккаунта
           </Link>
-          <span className="name-input-error profile__item-error profile__item-error_field_name"></span>
-          <button type='submit' className={isRed ? 'profile__save': 'profile__disabled'}>Сохранить</button>
+          <span className="form_register_error">{props.errProfile}</span>
+          <button disabled={isDisabled} onClick={handleSubmit} type='submit' className={isRed ? (isDisabled ? 'profile__save login__save_disabled' : "profile__save"): 'profile__disabled'}>Сохранить</button>
+          </main>
         </section>
     )
 }

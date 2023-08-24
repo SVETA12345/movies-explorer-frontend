@@ -55,7 +55,7 @@
 
 .login__save{
     margin: 0 auto;
-    margin-top: 221px;
+    margin-top: 20px;
     background: transparent;
     border: none;
     display: block;
@@ -87,7 +87,10 @@
 .login__another-signup_active{
     color: #4285F4;
 }
-
+.login__save_disabled{
+    background: #F8F8F8;
+    color: #C2C2C2;
+}
 .login__signup:hover{
     opacity: 0.7;
 }
@@ -119,7 +122,7 @@
         margin-top: 80px;
     }
     .login__save{
-        margin-top: 309px;
+        margin-top: 20px;
     }
     .login__signup{
         font-size: 12px;
