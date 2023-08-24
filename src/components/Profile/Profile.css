@@ -93,7 +93,7 @@
 
 .profile__save{
     margin: 0 auto;
-    margin-top: 220px;
+    margin-top: 20px;
     background: transparent;
     border: none;
     display: block;
@@ -151,6 +151,6 @@
     }
     .profile__save{
         width: 300px;
-        margin-top: 379px;
+        margin-top: 20px;
     }
 }

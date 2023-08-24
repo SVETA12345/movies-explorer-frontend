@@ -4,11 +4,22 @@ import image from '../../images/noimage.png'
 import saveLike from '../../images/save1.svg'
 import like from '../../images/save1d.svg'
 import close from '../../images/close.svg'
-import { useState } from 'react';
-function MoviesCard({card, isSaveFilm}) {
-    console.log(isSaveFilm)
+import { useEffect, useState } from 'react';
+import { api } from "../../utils/ApiMain.js";
+const server_url='https://api.nomoreparties.co'
+function MoviesCard({card, isSaveFilm, ...props}) {
     const [isLiked, setIsLiked]= useState(false)
     let duration = ''
+    useEffect(()=>{
+      for (let index=0; index<props.saveCards.length; index+=1){
+        console.log(props.saveCards[index].id, card.id)
+        if (props.saveCards[index].id===card.id){
+          setIsLiked(true)
+          break
+        }
+        setIsLiked(false)
+      }
+    }, [props.loggedIn, props.handleSubmitFilms])
     if (card.duration <60){
         duration=`${card.duration}м`
     }
@@ -18,18 +29,44 @@ function MoviesCard({card, isSaveFilm}) {
     else { duration = `${parseInt(card.duration/60)}ч${card.duration % 60}м`}
     function handleLikeClick(){
         if (isLiked){
-            setIsLiked(false)
+          api.getDataSaveCards().then((data)=>{
+            for (let index=0; index<props.saveCards.length; index+=1){
+              if (props.saveCards[index].id===card.id){
+                const _id=props.saveCards[index]._id
+            api.deleteClickLike(_id).then(()=>{
+              setIsLiked(false)
+              const saveCardsNew=props.saveCards.filter((item)=>{
+                return item.id!==card.id
+              })
+              props.setSaveCards(saveCardsNew)
+            }).catch((err)=>(console.log(err)))
+            break
+          }}
+          }).catch((err)=>{console.log(err)})
+          
         }
-        else {setIsLiked(true)}
+        else{
+          api.addClickLike(card).then((data)=>{
+            
+            const saveCardsNew=props.saveCards
+            saveCardsNew.push(data)
+            console.log('saveCardsNew', saveCardsNew, data, props.saveCards)
+            props.setSaveCards(saveCardsNew)
+            setIsLiked(true)
+          }).catch((err)=>{console.log(err)})
+        }
+
     }
   return (
     <div className="place">
       <div className="place__info">
+        <a href={card.trailerLink} target="_blank" rel="noopener noreferrer">
         <img
           className="place__photo"
-          src={card.image ==='' ? image : card.image}
+          src={card.image.url ==='' ? image : server_url+card.image.url}
           alt={card.nameRU}
         />
+        </a>
       </div>
       <div className="place__footer">
         <div className='place__contain'>

@@ -31,10 +31,10 @@ function SavedMovies(props) {
                
             </Header>
             <main>
-            <SearchForm isKorot={props.isKorot} handleKorot={props.handleKorot}/>
+            <SearchForm nameFilm={props.nameFilm} isKorot={props.isKorot} handleKorot={props.handleKorot} setNameFilm={props.setNameFilm}  handleSubmitFilms={props.handleSubmitFilms}/>
             <div className='movies__line'></div>
-            <MoviesCardList isDisabled={props.isDisabled} cards={props.cards} width={props.width} indexCard={props.indexCard}
-             handleClickMoreCard={props.handleClickMoreCard} isKorot={props.isKorot} isSaveFilm={true}>
+            <MoviesCardList setSaveCards={props.setSaveCards}  cards={props.cards} loggedIn={props.loggedIn}
+              isKorot={props.isKorot} isSaveFilm={true} saveCards={props.saveCards} roundedVisibleCardCount={props.cards.length} >
              </MoviesCardList>
              </main>
         <Footer />
