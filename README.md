@@ -6,3 +6,6 @@ https://www.figma.com/file/nKquAc3mF0OndtCUxLUazH/dark-1?type=design&node-id=410
 Frontend https://sveta.movies-explorer.nomoredomainsicu.ru/
 
 Backend https://api.movies-explorer.nomoreparties.co
+
+##Ссылка на pull requests
+https://github.com/SVETA12345/movies-explorer-frontend/pull/2
