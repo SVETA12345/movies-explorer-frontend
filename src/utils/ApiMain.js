@@ -12,6 +12,7 @@ class Api{
     getUserData(){
         return fetch(`${this._url}/users/me`, {
             method:"GET",
+            withCredentials: true,
             credentials: 'include',
             headers:this._headers
         }).then((res)=>{
@@ -34,6 +35,7 @@ class Api{
     addClickLike(card){
         return fetch(`${this._url}/movies/`, {
             method: 'POST',
+            withCredentials: true,
             credentials: 'include',
             headers: this._headers,
             body: JSON.stringify(card)
@@ -44,6 +46,7 @@ class Api{
     deleteClickLike(movieId){
         return fetch(`${this._url}/movies/${movieId}`, {
             method:"DELETE",
+            withCredentials: true,
             credentials: 'include',
             headers:this._headers
         }).then((res)=>{
@@ -54,6 +57,7 @@ class Api{
         return fetch(`${this._url}/movies`, {
             method: 'GET',
             credentials: 'include',
+            withCredentials: true,
             headers: this._headers,
           }).then((res)=>{
             return this._getResponseData(res)
@@ -62,6 +66,7 @@ class Api{
     exitPage(){
         return fetch(`${this._url}/signout`, {
             method: "POST",
+            withCredentials: true,
             credentials: 'include', // <--- YOU NEED THIS LINE
             headers: this._headers,
           }).then((res)=>{
@@ -72,7 +77,8 @@ class Api{
 
 export const api = new Api({
     url:'https://api.movies-explorer.nomoreparties.co',
-    headers:{ 
-      authorization: '1c8d4f00-a15b-43e6-a0ec-40bf4915d387',
-      'Content-Type': 'application/json'}
+    headers:{
+      'Content-Type': 'application/json',
+    },
+
   })
