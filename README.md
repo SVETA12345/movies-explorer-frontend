@@ -7,5 +7,4 @@ Frontend https://sveta.movies-explorer.nomoredomainsicu.ru/
 
 Backend https://api.movies-explorer.nomoreparties.co
 
-##Ссылка на pull requests
-https://github.com/SVETA12345/movies-explorer-frontend/pull/2
+##Ссылка на pull requests: https://github.com/SVETA12345/movies-explorer-frontend/pull/2
