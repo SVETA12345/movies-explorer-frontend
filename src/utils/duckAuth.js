@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import ServerError from "../components/ServerError/ServerError";
-export const BASE_URL = 'http://localhost:3003';
+export const BASE_URL = 'https://api.movies-explorer.nomoreparties.co';
 
 function getResponseData(res) {
     console.log(res)
@@ -14,6 +14,7 @@ function getResponseData(res) {
 export const register = ( password, email, name) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
+    withCredentials: true,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -29,6 +30,7 @@ export const register = ( password, email, name) => {
 
 export const authorize = (password, email) => {
     return fetch(`${BASE_URL}/signin`, {
+      withCredentials: true,
       method: 'POST',
       headers: {
         'Accept': 'application/json',
