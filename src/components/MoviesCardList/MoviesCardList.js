@@ -1,7 +1,6 @@
 import './MoviesCardList.css';
 import '../MoviesCard/MoviesCard'
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { Children } from 'react';
 
 function MoviesCardList(props) {  
         return (

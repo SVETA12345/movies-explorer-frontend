@@ -7,12 +7,22 @@ import PopupNavigation from '../PopupNavigation/PopupNavigation';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader'
+import { api } from "../../utils/ApiMain.js";
 function SavedMovies(props) {
     const [isOpen, setIsOpen] = useState(false);
+    
     function handleOpenData() {
         setIsOpen(true);
         props.handleActiveSaveFilm()
     }
+    useEffect(()=>{
+        props.setNameFilm('')
+        props.setIsKorotSaveFilms(false)
+        api.getDataSaveCards(props.setIsLoadingSaveCards).then((data)=>{
+            props.setSaveCards(data)
+        }).catch((err)=>{console.log(err)})
+    }, [])
     return (
         <section className="movies">
             <PopupNavigation isOpen={isOpen} setIsOpen={setIsOpen} isGlavnay={props.isGlavnay}
@@ -33,9 +43,15 @@ function SavedMovies(props) {
             <main>
             <SearchForm nameFilm={props.nameFilm} isKorot={props.isKorot} handleKorot={props.handleKorot} setNameFilm={props.setNameFilm}  handleSubmitFilms={props.handleSubmitFilms}/>
             <div className='movies__line'></div>
-            <MoviesCardList setSaveCards={props.setSaveCards}  cards={props.cards} loggedIn={props.loggedIn}
-              isKorot={props.isKorot} isSaveFilm={true} saveCards={props.saveCards} roundedVisibleCardCount={props.cards.length} >
-             </MoviesCardList>
+            {props.isLoading ? (<Preloader />) :(props.cards.length>0 ?(
+                <MoviesCardList setSaveCards={props.setSaveCards}  cards={props.cards} loggedIn={props.loggedIn}
+                isKorot={props.isKorot} isSaveFilm={true} saveCards={props.saveCards} roundedVisibleCardCount={props.cards.length} >
+               </MoviesCardList>) :(props.cards.length===0 ?
+                    (<p className='movies__notfound'>Ничего не найдено</p>) :(<p className='movies__notfound'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>
+                )
+            ))
+            }
+           
              </main>
         <Footer />
         </section>

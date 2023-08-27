@@ -1,7 +1,7 @@
 import './AboutMe.css';
 import imgSveta from '../../images/sveta.jpg'
 import strelka from '../../images/about-me__strelka.svg'
-import { Link } from 'react-router-dom'; 
+
 function AboutMe() {
   return (
       <section className='about-me'>

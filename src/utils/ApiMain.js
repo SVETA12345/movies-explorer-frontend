@@ -19,7 +19,8 @@ class Api{
             return this._getResponseData(res)
         })       
     }
-    sendDataProfile(name,email){
+    sendDataProfile(name,email, setIsDisabled){
+        setIsDisabled(true)
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
             credentials: 'include',
@@ -53,13 +54,15 @@ class Api{
             return this._getResponseData(res)
         })
     }
-    getDataSaveCards(){
+    getDataSaveCards(setIsLoadingSaveCards){
+        setIsLoadingSaveCards(true)
         return fetch(`${this._url}/movies`, {
             method: 'GET',
             credentials: 'include',
             withCredentials: true,
             headers: this._headers,
           }).then((res)=>{
+            setIsLoadingSaveCards(false)
             return this._getResponseData(res)
         })
     }
