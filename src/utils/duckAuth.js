@@ -11,7 +11,8 @@ function getResponseData(res) {
   return Promise.reject({status: res.status});
 }
 
-export const register = ( password, email, name) => {
+export const register = ( password, email, name, setIsDisabled) => {
+  setIsDisabled(true)
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     withCredentials: true,
@@ -28,7 +29,8 @@ export const register = ( password, email, name) => {
   })
 }; 
 
-export const authorize = (password, email) => {
+export const authorize = (password, email, setIsDisabled) => {
+    setIsDisabled(true)
     return fetch(`${BASE_URL}/signin`, {
       withCredentials: true,
       method: 'POST',

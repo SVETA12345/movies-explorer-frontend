@@ -2,7 +2,7 @@ import './SearchForm.css';
 import logo from '../../images/lypa.svg';
 import button_on from '../../images/smalltumb-min.svg'
 import button_off from '../../images/smalltumboff-min.svg'
-import { useState } from "react";
+
 function SearchForm(props) {
     function handleChangeFilm(e) {
         props.setNameFilm(e.target.value);

@@ -13,7 +13,7 @@ import ProtectedRouteElement from '../ProtectedRoute';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { api } from "../../utils/ApiMain.js";
 import { apiMovies } from '../../utils/MoviesApi';
-
+import NoProtectedRouteElement from '../../NoProtectedRoute';
 function App() {
   const [currentUser, setCurrentUser] = useState({
     name: "",
@@ -21,9 +21,10 @@ function App() {
     _id: "",
   });
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingSaveCards, setIsLoadingSaveCards] = useState(false)
   const [nameFilm, setNameFilm] = useState()
-  const [disabledRegister, setIsDisabledRegister] = useState(false)
-  const [disabledLogin, setIsDisabledLogin] = useState(false)
+  const [disabledRegister, setIsDisabledRegister] = useState(true)
+  const [disabledLogin, setIsDisabledLogin] = useState(true)
   const [passwordLogin, setPasswordLogin] = useState('');
   const [emailLogin, setEmailLogin] = useState('')
   const [errProfile, setErrProfile] = useState('')
@@ -41,14 +42,13 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isKorotSaveFilms, setIsKorotSaveFilms] = useState(false)
   const [nameFilmSave, setNameFilmSave] = useState('')
-
+  const [isRed, setRed] = useState(false)
   const [isKorot, setIsKorot] = useState(false);
   const [saveCards, setSaveCards] = useState([])
   const navigate = useNavigate();
-
+  const [isDisabled, setIsDisabled] = useState(true)
   function handleKorot(e) {
     e.preventDefault();
-    console.log('doisKorot', isKorot)
     if (isKorot) {
       localStorage.setItem(currentUser.email, [nameFilm, false]);
       setIsKorot(false)
@@ -62,22 +62,19 @@ function App() {
   }
   function handleKorotSave(e) {
     e.preventDefault();
-
-    api.getDataSaveCards().then((data) => {
-      let data_new = data.filter(function (item) {
-        return item.nameRU.toLowerCase().includes(nameFilmSave.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilmSave.toLowerCase())
+    let data_new = saveCards.filter(function (item) {
+      return item.nameRU.toLowerCase().includes(nameFilmSave.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilmSave.toLowerCase())
+    })
+    if (isKorotSaveFilms) {
+      setIsKorotSaveFilms(false)
+    }
+    else {
+      data_new = data_new.filter(function (item) {
+        return item.duration <= 40
       })
-      if (isKorotSaveFilms) {
-        setIsKorotSaveFilms(false)
-      }
-      else {
-        data_new = data_new.filter(function (item) {
-          return item.duration <= 40
-        })
-        setIsKorotSaveFilms(true)
-      }
-      setSaveCards(data_new)
-    }).catch((err) => { console.log(err) })
+      setIsKorotSaveFilms(true)
+    }
+    setSaveCards(data_new)
   }
   const tokenCheck = () => {
     // если у пользователя есть токен в localStorage, 
@@ -109,7 +106,7 @@ function App() {
   }
   function handleSubmitSavedFilms(e) {
     e.preventDefault();
-    api.getDataSaveCards().then((data) => {
+    api.getDataSaveCards(setIsLoadingSaveCards).then((data) => {
       let data_new = data.filter(function (item) {
         return item.nameRU.toLowerCase().includes(nameFilmSave.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilmSave.toLowerCase())
       })
@@ -158,19 +155,21 @@ function App() {
         setCurrentUser(data)
       })
       .catch((err) => console.log(err));
-    api.getDataSaveCards().then((data) => {
+    api.getDataSaveCards(setIsLoadingSaveCards).then((data) => {
       setSaveCards(data)
     }).catch((err) => { console.log(err) })
   }, [loggedIn]);
 
   function handleUpdateUser({ name, email }) {
     api
-      .sendDataProfile(name, email)
+      .sendDataProfile(name, email, setIsDisabled)
       .then((data) => {
         setErrProfile('Запрос прошёл успешно!')
         setCurrentUser(data);
+        setRed(false)
       })
       .catch((err) => {
+        setRed(true)
         if (err.status === 409) {
           setErrProfile('Пользователь с таким email уже существует')
         }
@@ -182,13 +181,13 @@ function App() {
 
   function handleSubmitRegister(e) {
     e.preventDefault();
-    duckAuth.register(passwordRegister, useremail, username).then((res) => {
+    duckAuth.register(passwordRegister, useremail, username, setIsDisabledRegister).then((res) => {
       setErrorRegister('')
       if (res) {
         setIsRegister(true);
         localStorage.setItem(useremail, ['', isKorot]);
         duckAuth
-          .authorize(passwordRegister, useremail)
+          .authorize(passwordRegister, useremail, setIsDisabledRegister)
           .then((data) => {
             console.log('dataAVT', data)
             if (data.token) {
@@ -226,7 +225,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     duckAuth
-      .authorize(passwordLogin, emailLogin)
+      .authorize(passwordLogin, emailLogin, setIsDisabledLogin)
       .then((data) => {
         console.log('dataAVT', data)
         if (data.token) {
@@ -289,15 +288,15 @@ function App() {
               isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={cards} saveCards={saveCards}
               handleKorot={handleKorot} isKorot={isKorot}
             />} loggedIn={loggedIn} />} />
-            <Route path="/saved-movies" element={<ProtectedRouteElement element={<SavedMovies setSaveCards={setSaveCards} handleActiveSaveFilm={handleActiveSaveFilm} isGlavnay={isGlavnay}
+            <Route path="/saved-movies" element={<ProtectedRouteElement element={<SavedMovies isLoading={isLoadingSaveCards} setIsLoadingSaveCards={setIsLoadingSaveCards} setIsKorotSaveFilms={setIsKorotSaveFilms} setSaveCards={setSaveCards} handleActiveSaveFilm={handleActiveSaveFilm} isGlavnay={isGlavnay}
               isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={saveCards} saveCards={saveCards} loggedIn={loggedIn} nameFilm={nameFilmSave} setNameFilm={setNameFilmSave}
               handleKorot={handleKorotSave} isKorot={isKorotSaveFilms} handleSubmitFilms={handleSubmitSavedFilms}
             />} loggedIn={loggedIn} />} />
-            <Route path="/profile" element={<ProtectedRouteElement element={<Profile errProfile={errProfile} handleUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} handleActiveProfile={handleActiveProfile} isGlavnay={isGlavnay}
+            <Route path="/profile" element={<ProtectedRouteElement element={<Profile isDisabled={isDisabled} setIsDisabled={setIsDisabled} setErrProfile={setErrProfile} isRed={isRed} setRed={setRed} errProfile={errProfile} handleUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} handleActiveProfile={handleActiveProfile} isGlavnay={isGlavnay}
               isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} />} loggedIn={loggedIn} />} />
             <Route path="/signin" element={<Login setErrLogin={setErrLogin} setIsDisabledLogin={setIsDisabledLogin} disabledLogin={disabledLogin} errLogin={errLogin} emailLogin={emailLogin} setEmailLogin={setEmailLogin} passwordLogin={passwordLogin} setPasswordLogin={setPasswordLogin} handleSubmit={handleSubmit} />} />
-            <Route path="/signup" element={<Register setIsDisabledRegister={setIsDisabledRegister} disabledRegister={disabledRegister} errorRegister={errorRegister} username={username} setEmailRegister={setEmailRegister} isRegister={isRegister} setPasswordRegister={setPasswordRegister} passwordRegister={passwordRegister} setNameRegister={setNameRegister} useremail={useremail} handleSubmitRegister={handleSubmitRegister} setIsRegister={setIsRegister} />} />
-            <Route path="*" element={<ServerError />} />
+            <Route path="/signup" element={<Register setIsDisabledRegister={setIsDisabledRegister} disabledRegister={disabledRegister} errorRegister={errorRegister} username={username} setEmailRegister={setEmailRegister} isRegister={isRegister} setPasswordRegister={setPasswordRegister} passwordRegister={passwordRegister} setNameRegister={setNameRegister} useremail={useremail} handleSubmitRegister={handleSubmitRegister} setIsRegister={setIsRegister} password={passwordRegister} />} />
+            <Route path="*" element={<NoProtectedRouteElement element={<ServerError />} loggedIn={loggedIn} />} />
           </Routes>
         </div>
       </div>

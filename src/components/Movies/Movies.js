@@ -10,6 +10,7 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader'
 import constants from '../../utils/constants'
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { api } from "../../utils/ApiMain.js";
 function Movies(props) {
     const {
         LG_ROW_CARD_COUNT,
@@ -21,6 +22,7 @@ function Movies(props) {
     }=constants
     const isDesktop = useMediaQuery("(min-width: 1280px)");
     const isTablet = useMediaQuery("(min-width: 768px)");
+    const [isLoading, setIsLoading]=useState(false)
     const cardColumnCount = isDesktop
     ? LG_ROW_CARD_COUNT
     : isTablet
@@ -38,6 +40,11 @@ function Movies(props) {
     const roundedVisibleCardCount =Math.floor(visibleCardCount / cardColumnCount) * cardColumnCount;
     const isDisabled=roundedVisibleCardCount===props.cards.length || roundedVisibleCardCount>props.cards.length
     const [isOpen, setIsOpen] = useState(false);
+    useEffect(()=>{
+        api.getDataSaveCards(setIsLoading).then((data)=>{
+            props.setSaveCards(data)
+        }).catch((err)=>{console.log(err)})
+    },[])
     const handleClick = () => {
         calculateCardCount();
       };

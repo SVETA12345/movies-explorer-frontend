@@ -1,19 +1,56 @@
 import './Register.css';
 import logo from '../../images/header__logo.svg'
 import { Link } from 'react-router-dom';
-
+import { useState} from "react";
+import constants from '../../utils/constants'
 function Register(props) {
+    const {EMAIL_REGEXP} = constants;
+    const [errorName, setErrorName] =useState('')
+    const [errorEmail, setErrorEmail] =useState('')
+    const [errorPassword, setErrorPassword] = useState('')
+    function validateButton(password, email, name){
+        if (email.length>=2 && password.length>=2 && EMAIL_REGEXP.test(email) && name.length>=2 && name.length<=30){
+            console.log('false')
+            props.setIsDisabledRegister(false)
+        }
+        else{
+            props.setIsDisabledRegister(true)
+        }
+    }
     function handleChangeName(e) {
-        props.setIsDisabledRegister(false)
         props.setNameRegister(e.target.value);
+        validateButton(props.password, props.useremail, e.target.value)
+        if (e.target.value.length<2 || e.target.value.length>30){
+            setErrorName('Имя должно содержать не менее 2 и не более 30 символов')
+        }
+        else{
+            setErrorName('')
+        }
       }
     function handleChangePassword(e) {
-        props.setIsDisabledRegister(false)
+        
+        validateButton(e.target.value, props.useremail, props.username)
         props.setPasswordRegister(e.target.value);
+        if (e.target.value.length<2){
+            setErrorPassword('Пожалуйста, используйте не менее 2 символов')
+        }
+        else{
+            setErrorPassword('')
+        }
       }
     function handleChangeEmail(e) {
-        props.setIsDisabledRegister(false)
+        
+        validateButton(props.password, e.target.value, props.username)
         props.setEmailRegister(e.target.value);
+        if (e.target.value===''){
+            setErrorEmail('Пожалуйста, заполните поле')
+        }
+        else if (EMAIL_REGEXP.test(e.target.value)!==true){
+           setErrorEmail('Пожалуйста, введите адрес электронной почты') 
+        }
+        else{
+            setErrorEmail('') 
+        }
     }
     return (
         <div className="login">
@@ -22,7 +59,7 @@ function Register(props) {
                 <img src={logo} alt='logo' className='login__logo'></img>
             </Link>
                 <h1 className="login__title">Добро пожаловать!</h1>
-                <form className="form">
+                <form className="form" noValidate>
                 <p className='form__subtitle'>Имя</p>
                     <input
                         value={props.username}
@@ -35,6 +72,7 @@ function Register(props) {
                         minLength={2}
                         maxLength={30}
                     />
+                    <span className="form__input_error">{errorName}</span>
                     <p className='form__subtitle'>E-mail</p>
                     <input
                         value={props.useremail}
@@ -46,20 +84,21 @@ function Register(props) {
                         required
                         id="username"
                     />
-                    <span className="mesto-name-error form__item-error form__item-error_field_name"></span>
+                    <span className="form__input_error">{errorEmail}</span>
                     <p className='form__subtitle'>Пароль</p>
                     <input
                         value={props.password}
                         onChange={handleChangePassword}
                         type="password"
                         placeholder="Пароль"
-                        className="login__input"
+                        className={props.password.length<2 && props.password.length>0 ? "login__input login__error_password" : "login__input"}
                         name="password"
                         id="password"
                         required
                         minLength={2}
                         maxLength={40}
                     />
+                    <span className="form__input_error">{errorPassword}</span>
                     <span className="form_register_error">{props.errorRegister}</span>
                     <button
                         className={props.disabledRegister ? "login__save login__save_register login__save_disabled" : "login__save login__save_register"}
