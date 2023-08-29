@@ -27,32 +27,46 @@ function MoviesCard({ card, isSaveFilm, ...props }) {
   }
   else { duration = `${parseInt(card.duration / 60)}ч${card.duration % 60}м` }
   function handleLikeClick() {
-    if (isLiked) {
+      let _id =''
+      console.log('saveCards', props.saveCards, card.id)
       for (let index = 0; index < props.saveCards.length; index += 1) {
         if (props.saveCards[index].id === card.id) {
-          const _id = props.saveCards[index]._id
+          console.log('props.saveCards[index].id', props.saveCards[index].id)
+          setIsLiked(true)
+          console.log(isLiked)
+          _id = props.saveCards[index]._id
           api.deleteClickLike(_id).then(() => {
             setIsLiked(false)
-            const saveCardsNew = props.saveCards.filter((item) => {
+            let saveCardsNew = props.saveCards.filter((item) => {
               return item.id !== card.id
             })
             props.setSaveCards(saveCardsNew)
+            saveCardsNew = saveCardsNew.filter((item) => {
+              return item.nameRU.toLowerCase().includes(props.nameFilm.toLowerCase()) || item.nameEN.toLowerCase().includes(props.nameFilm.toLowerCase())
+            })
+            if(props.isKorot){
+            saveCardsNew = saveCardsNew.filter(function (item) {
+              return item.duration <= 40
+            })
+          }
+            props.setSaveCardsKorot(saveCardsNew)
           }).catch((err) => (console.log(err)))
           break
         }
       }
-
-    }
-    else {
-      api.addClickLike(card).then((data) => {
-
-        const saveCardsNew = props.saveCards
-        saveCardsNew.push(data)
-        console.log('saveCardsNew', saveCardsNew, data, props.saveCards)
-        props.setSaveCards(saveCardsNew)
-        setIsLiked(true)
-      }).catch((err) => { console.log(err) })
-    }
+      if (!_id){
+        api.addClickLike(card).then((data) => {
+  
+          const saveCardsNew = props.saveCards
+          saveCardsNew.push(data)
+          console.log('saveCardsNew', saveCardsNew, data, props.saveCards)
+          props.setSaveCards(saveCardsNew)
+          props.setSaveCardsKorot(saveCardsNew)
+          setIsLiked(true)
+        }).catch((err) => { console.log(err) })
+      }
+    
+   
 
   }
   return (
