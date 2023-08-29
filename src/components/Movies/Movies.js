@@ -2,7 +2,7 @@ import './Movies.css';
 import Header from '../Header/Header';
 import { Link } from 'react-router-dom';
 import icon from '../../images/profile.svg'
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import PopupNavigation from '../PopupNavigation/PopupNavigation';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';

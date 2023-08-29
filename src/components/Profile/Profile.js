@@ -33,6 +33,7 @@ function Profile(props) {
     }).catch((err) => { console.log(err) })
 
   }
+  
   function handleChange() {
     props.setRed(true)
     props.setIsDisabled(true)
