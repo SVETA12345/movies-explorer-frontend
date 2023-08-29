@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, useNavigate, Navigate } from 'react-router-dom';
 import Main from "../Main/Main.js";
 import Movies from '../Movies/Movies';
 import { useState, useEffect } from "react";
@@ -13,7 +13,7 @@ import ProtectedRouteElement from '../ProtectedRoute';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { api } from "../../utils/ApiMain.js";
 import { apiMovies } from '../../utils/MoviesApi';
-import NoProtectedRouteElement from '../../NoProtectedRoute';
+
 function App() {
   const [currentUser, setCurrentUser] = useState({
     name: "",
@@ -45,18 +45,28 @@ function App() {
   const [isRed, setRed] = useState(false)
   const [isKorot, setIsKorot] = useState(false);
   const [saveCards, setSaveCards] = useState([])
+  const [saveCardsKorot, setSaveCardsKorot] = useState([])
+  const [cardsKorot, setCardsKorot] = useState([])
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true)
   function handleKorot(e) {
     e.preventDefault();
+    let data_new = cards.filter(function (item) {
+      return item.nameRU.toLowerCase().includes(nameFilm.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilm.toLowerCase())
+    })
     if (isKorot) {
       localStorage.setItem(currentUser.email, [nameFilm, false]);
       setIsKorot(false)
     }
     else {
+      data_new = data_new.filter(function (item) {
+        return item.duration <= 40
+      })
       localStorage.setItem(currentUser.email, [nameFilm, true]);
+
       setIsKorot(true)
     }
+    setCardsKorot(data_new)
     console.log('isKorot', isKorot)
 
   }
@@ -74,7 +84,7 @@ function App() {
       })
       setIsKorotSaveFilms(true)
     }
-    setSaveCards(data_new)
+    setSaveCardsKorot(data_new)
   }
   const tokenCheck = () => {
     // если у пользователя есть токен в localStorage, 
@@ -83,7 +93,6 @@ function App() {
       if (res) {
         // авторизуем пользователя
         setLoggedIn(true);
-        navigate("/movies", { replace: true })
       }
     }).catch((err) => console.log(err));
 
@@ -91,32 +100,28 @@ function App() {
   function handleSubmitFilms(e) {
     e.preventDefault();
     localStorage.setItem(currentUser.email, [nameFilm, isKorot]);
-    apiMovies.getCardsData(setIsLoading).then((data) => {
-      let data_new = data.filter(function (item) {
-        return item.nameRU.toLowerCase().includes(nameFilm.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilm.toLowerCase())
-      })
-      if (isKorot) {
-        data_new = data_new.filter(function (item) {
-          return item.duration <= 40
-        })
-      }
-      setCards(data_new)
+    let data_new = cards.filter(function (item) {
+      return item.nameRU.toLowerCase().includes(nameFilm.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilm.toLowerCase())
     })
-      .catch((err) => { console.log(err) })
+    if (isKorot) {
+      data_new = data_new.filter(function (item) {
+        return item.duration <= 40
+      })
+    }
+    setCardsKorot(data_new)
   }
   function handleSubmitSavedFilms(e) {
     e.preventDefault();
-    api.getDataSaveCards(setIsLoadingSaveCards).then((data) => {
-      let data_new = data.filter(function (item) {
-        return item.nameRU.toLowerCase().includes(nameFilmSave.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilmSave.toLowerCase())
+
+    let data_new = saveCards.filter(function (item) {
+      return item.nameRU.toLowerCase().includes(nameFilmSave.toLowerCase()) || item.nameEN.toLowerCase().includes(nameFilmSave.toLowerCase())
+    })
+    if (isKorotSaveFilms) {
+      data_new = data_new.filter(function (item) {
+        return item.duration <= 40
       })
-      if (isKorotSaveFilms) {
-        data_new = data_new.filter(function (item) {
-          return item.duration <= 40
-        })
-      }
-      setSaveCards(data_new)
-    }).catch((err) => { console.log(err) })
+    }
+    setSaveCardsKorot(data_new)
   }
   useEffect(() => {
     if (localStorage.getItem(currentUser.email) !== null) {
@@ -138,14 +143,14 @@ function App() {
               return item.duration <= 40
             })
           }
-          setCards(data_new)
+          setCards(data)
+          setCardsKorot(data_new)
         })
           .catch((err) => { console.log(err) })
       }
     }
+  }, [loggedIn, currentUser.email])
 
-
-  }, [loggedIn, currentUser.email, localStorage.getItem(currentUser.email)])
   useEffect(() => {
     setNameFilmSave('')
     tokenCheck()
@@ -157,6 +162,7 @@ function App() {
       .catch((err) => console.log(err));
     api.getDataSaveCards(setIsLoadingSaveCards).then((data) => {
       setSaveCards(data)
+      setSaveCardsKorot(data)
     }).catch((err) => { console.log(err) })
   }, [loggedIn]);
 
@@ -282,24 +288,26 @@ function App() {
       <div className="App">
         <div className='page'>
           <Routes>
+            <Route path="*" element={<Navigate to='/404'/>}></Route>
+            <Route path='/404' element={<ServerError />} />
             <Route path="/" element={<Main loggedIn={loggedIn} handleActiveGlavnay={handleActiveGlavnay} isGlavnay={isGlavnay}
               isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} />} />
-            <Route path="/movies" element={<ProtectedRouteElement element={<Movies setSaveCards={setSaveCards} loggedIn={loggedIn} isLoading={isLoading} nameFilm={nameFilm} handleSubmitFilms={handleSubmitFilms} setNameFilm={setNameFilm} handleActiveFilms={handleActiveFilms} isGlavnay={isGlavnay}
-              isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={cards} saveCards={saveCards}
+            <Route path="/movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={Movies} setSaveCardsKorot={setSaveCardsKorot} setSaveCards={setSaveCards} isLoading={isLoading} nameFilm={nameFilm} handleSubmitFilms={handleSubmitFilms} setNameFilm={setNameFilm} handleActiveFilms={handleActiveFilms} isGlavnay={isGlavnay}
+              isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={cardsKorot} saveCards={saveCards}
               handleKorot={handleKorot} isKorot={isKorot}
-            />} loggedIn={loggedIn} />} />
-            <Route path="/saved-movies" element={<ProtectedRouteElement element={<SavedMovies isLoading={isLoadingSaveCards} setIsLoadingSaveCards={setIsLoadingSaveCards} setIsKorotSaveFilms={setIsKorotSaveFilms} setSaveCards={setSaveCards} handleActiveSaveFilm={handleActiveSaveFilm} isGlavnay={isGlavnay}
-              isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={saveCards} saveCards={saveCards} loggedIn={loggedIn} nameFilm={nameFilmSave} setNameFilm={setNameFilmSave}
+            />} />
+            <Route path="/saved-movies" element={<ProtectedRouteElement element={SavedMovies} setSaveCardsKorot={setSaveCardsKorot} isLoading={isLoadingSaveCards} setIsLoadingSaveCards={setIsLoadingSaveCards} setIsKorotSaveFilms={setIsKorotSaveFilms} setSaveCards={setSaveCards} handleActiveSaveFilm={handleActiveSaveFilm} isGlavnay={isGlavnay}
+              isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} cards={saveCardsKorot} saveCards={saveCards} loggedIn={loggedIn} nameFilm={nameFilmSave} setNameFilm={setNameFilmSave}
               handleKorot={handleKorotSave} isKorot={isKorotSaveFilms} handleSubmitFilms={handleSubmitSavedFilms}
-            />} loggedIn={loggedIn} />} />
-            <Route path="/profile" element={<ProtectedRouteElement element={<Profile isDisabled={isDisabled} setIsDisabled={setIsDisabled} setErrProfile={setErrProfile} isRed={isRed} setRed={setRed} errProfile={errProfile} handleUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} handleActiveProfile={handleActiveProfile} isGlavnay={isGlavnay}
-              isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} />} loggedIn={loggedIn} />} />
+            />}  />
+            <Route path="/profile" element={<ProtectedRouteElement element={Profile} loggedIn={loggedIn} isDisabled={isDisabled} setIsDisabled={setIsDisabled} setErrProfile={setErrProfile} isRed={isRed} setRed={setRed} errProfile={errProfile} handleUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn} handleActiveProfile={handleActiveProfile} isGlavnay={isGlavnay}
+              isFilms={isFilms} isSaveFilm={isSaveFilm} isProfile={isProfile} />}  />
             <Route path="/signin" element={<Login setErrLogin={setErrLogin} setIsDisabledLogin={setIsDisabledLogin} disabledLogin={disabledLogin} errLogin={errLogin} emailLogin={emailLogin} setEmailLogin={setEmailLogin} passwordLogin={passwordLogin} setPasswordLogin={setPasswordLogin} handleSubmit={handleSubmit} />} />
             <Route path="/signup" element={<Register setIsDisabledRegister={setIsDisabledRegister} disabledRegister={disabledRegister} errorRegister={errorRegister} username={username} setEmailRegister={setEmailRegister} isRegister={isRegister} setPasswordRegister={setPasswordRegister} passwordRegister={passwordRegister} setNameRegister={setNameRegister} useremail={useremail} handleSubmitRegister={handleSubmitRegister} setIsRegister={setIsRegister} password={passwordRegister} />} />
-            <Route path="*" element={<NoProtectedRouteElement element={<ServerError />} loggedIn={loggedIn} />} />
           </Routes>
         </div>
       </div>
+
     </CurrentUserContext.Provider>
   );
 }

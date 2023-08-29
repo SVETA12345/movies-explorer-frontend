@@ -10,7 +10,6 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader'
 import constants from '../../utils/constants'
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { api } from "../../utils/ApiMain.js";
 function Movies(props) {
     const {
         LG_ROW_CARD_COUNT,
@@ -40,11 +39,7 @@ function Movies(props) {
     const roundedVisibleCardCount =Math.floor(visibleCardCount / cardColumnCount) * cardColumnCount;
     const isDisabled=roundedVisibleCardCount===props.cards.length || roundedVisibleCardCount>props.cards.length
     const [isOpen, setIsOpen] = useState(false);
-    useEffect(()=>{
-        api.getDataSaveCards(setIsLoading).then((data)=>{
-            props.setSaveCards(data)
-        }).catch((err)=>{console.log(err)})
-    },[])
+    
     const handleClick = () => {
         calculateCardCount();
       };
@@ -85,7 +80,8 @@ function Movies(props) {
             <SearchForm handleSubmitFilms={props.handleSubmitFilms} nameFilm={props.nameFilm} setNameFilm={props.setNameFilm} isKorot={props.isKorot} handleKorot={props.handleKorot}/>
             <div className='movies__line'></div>
             {props.isLoading ? (<Preloader />) :(props.cards.length>0 ?(
-                <MoviesCardList handleSubmitFilms={props.handleSubmitFilms} setSaveCards={props.setSaveCards} roundedVisibleCardCount={roundedVisibleCardCount} loggedIn={props.loggedIn}  cards={props.cards} saveCards={props.saveCards}>
+                <MoviesCardList isKorot={props.isKorot} 
+                nameFilm={props.nameFilm} setSaveCardsKorot={props.setSaveCardsKorot} handleSubmitFilms={props.handleSubmitFilms} setSaveCards={props.setSaveCards} roundedVisibleCardCount={roundedVisibleCardCount} loggedIn={props.loggedIn}  cards={props.cards} saveCards={props.saveCards}>
                    <button type='button' disabled={isDisabled}   onClick={handleClick} className={isDisabled ? 'places_disabled' : "places__button"} isSaveFilm= {false}>Ещё</button>
                 </MoviesCardList>) :(props.cards.length===0 ?
                     (<p className='movies__notfound'>Ничего не найдено</p>) :(<p className='movies__notfound'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>
