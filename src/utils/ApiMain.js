@@ -79,7 +79,7 @@ class Api{
 }
 
 export const api = new Api({
-    url:'https://api.movies-explorer.nomoreparties.co',
+    url:'https://movies.mao321.keenetic.pro/api',
     headers:{
       'Content-Type': 'application/json',
     },
