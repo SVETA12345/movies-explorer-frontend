@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import ServerError from "../components/ServerError/ServerError";
-export const BASE_URL = 'https://api.movies-explorer.nomoreparties.co';
+export const BASE_URL = 'https://movies.mao321.keenetic.pro/api';
 
 function getResponseData(res) {
     console.log(res)
