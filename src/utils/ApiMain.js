@@ -79,7 +79,7 @@ class Api{
 }
 
 export const api = new Api({
-    url:'https://movies.mao321.keenetic.pro/api',
+    url:'http://localhost:3003/api',
     headers:{
       'Content-Type': 'application/json',
     },
